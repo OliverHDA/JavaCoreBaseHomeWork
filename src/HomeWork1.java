@@ -12,24 +12,24 @@ public class HomeWork1 {
         return x < 0;
     }
 
-    public static void positiveNegativeIdentifier(int x) {
-        if (negativeNumber(x)) {
-            System.out.println("Число " + x + " отрицательное.");
-        } else {
-            System.out.println("Число " + x + " положительное.");
-        }
+    public static String positiveNegativeIdentifier(int x) {
+        return ((negativeNumber(x))) ? " - отрицательное число." : " - положительное число.";
+    }
+
+    public static void positiveNegativeNumber(int x) {
+        System.out.println(x + positiveNegativeIdentifier(x));
     }
 
     public static void sayHello(String name) {
         System.out.println("Привет, " + name + "!");
     }
 
-    public static void leapYear(int year) {
-        if (leapYearFinder(year)) {
-            System.out.println("Год " + year + " високосный.");
-        } else {
-            System.out.println("Год " + year + " невисокосный.");
-        }
+    public static String leapYear(int year) {
+        return (leapYearFinder(year)) ? " - високосный год." : " - невисокосный год.";
+    }
+
+    public static void leapYearOut(int year) {
+        System.out.println(year + leapYear(year));
     }
 
     public static boolean leapYearFinder(int year) {
@@ -52,7 +52,7 @@ public class HomeWork1 {
         float piShort = 3.14f;
         final double pi = Math.PI;
         char piSymbol = '\u03C0';
-        boolean piIsPositive = pi > 0;
+        boolean piIsPositive = true;
 
         String name = "Фанзиль";
         sayHello(name);
@@ -69,9 +69,9 @@ public class HomeWork1 {
 
         int x = -273;
         System.out.println(negativeNumber(x));
-        positiveNegativeIdentifier(x);
+        positiveNegativeNumber(x);
 
         int year = 2020;
-        leapYear(year);
+        leapYearOut(year);
     }
 }
