@@ -1,38 +1,47 @@
 public class HomeWork1 {
 
-    public static float calculation(float a, float b, float c, float d) {
-        return a * (b + (c / d));
+    //    Задание 3.
+    public static double calculation(double a, double b, double c, double d) {
+        if (d == 0) {
+            System.out.println("На ноль делить нельзя.");
+            return 0;
+        } else {
+            return a * (b + (c / d));
+        }
     }
 
-    public static boolean task10and20(int x1, int x2) {
-        return (((x1 + x2) >= 10) && ((x1 + x2) <= 20));
+    //    Задание 4.
+    public static boolean task10and20(int a, int b) {
+        int sum = a + b;
+        return (sum >= 10 && sum <= 20);
     }
 
-    public static boolean negativeNumber(int x) {
+    //    Задание 5.
+    public static void digitIdentifier(int x) {
+        if (isNegative(x)) {
+            System.out.println(x + " - отрицательное число.");
+        } else
+            System.out.println(x + " - положительное число.");
+    }
+
+    //    Задание 6.
+    public static boolean isNegative(int x) {
         return x < 0;
-    }
-
-    public static String positiveNegativeIdentifier(int x) {
-        return ((negativeNumber(x))) ? " - отрицательное число." : " - положительное число.";
-    }
-
-    public static void positiveNegativeNumber(int x) {
-        System.out.println(x + positiveNegativeIdentifier(x));
     }
 
     public static void sayHello(String name) {
         System.out.println("Привет, " + name + "!");
     }
 
-    public static String leapYear(int year) {
-        return (leapYearFinder(year)) ? " - високосный год." : " - невисокосный год.";
+    public static void leapYear(int year) {
+        if (isLeapYear(year)) {
+            System.out.println(year + " - високосный год.");
+        } else {
+            System.out.println(year + " - невисокосный год.");
+        }
     }
 
-    public static void leapYearOut(int year) {
-        System.out.println(year + leapYear(year));
-    }
-
-    public static boolean leapYearFinder(int year) {
+    public static boolean isLeapYear(int year) {
         if ((year % 4) != 0) {
             return false;
         } else if (year < 1582) {
@@ -41,33 +50,37 @@ public class HomeWork1 {
     }
 
     public static void main(String[] args) {
-        byte byteMaxValue = 127;
-        short shortMaxValue = 32767;
-        int intMaxValue = 2147483647;
-        long longMaxValue = 9223372036854775807L;
+        byte byteMaxValue = Byte.MAX_VALUE;
+        short shortMaxValue = Short.MAX_VALUE;
+        int intMinValue = Integer.MIN_VALUE;
+        long longMaxValue = 9_223_372_036_854_775_807L;
         float piShort = 3.14f;
         final double pi = Math.PI;
         char piSymbol = '\u03C0';
-        boolean piIsPositive = true;
+        boolean flag = true;
 
+//        System.out.printf();
+
+        System.out.println("Задание №3");
+        double calcResult = calculation(2, 5, 6, 3);
+        System.out.println(calcResult);
+
+        System.out.println("Задание №4");
+        System.out.println(task10and20(15, 5));
+
+        System.out.println("Задание №5");
+        int x = -273;
+        digitIdentifier(x);
+
+        System.out.println("Задание №6");
+        System.out.println(isNegative(x));
+
+        System.out.println("Задание №7");
         String name = "Фанзиль";
         sayHello(name);
 
-        float a = 2.0f;
-        float b = 3.0f;
-        float c = 10.0f;
-        float d = 5.0f;
-        System.out.println(calculation(a, b, c, d));
-
-        int x1 = 15;
-        int x2 = 5;
-        System.out.println(task10and20(x1, x2));
-
-        int x = -273;
-        System.out.println(negativeNumber(x));
-        positiveNegativeNumber(x);
-
+        System.out.println("Задание №8");
         int year = 2020;
-        leapYearOut(year);
+        leapYear(year);
     }
 }
