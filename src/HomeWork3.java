@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,12 +8,12 @@ public class HomeWork3 {
 
     public static void main(String[] args) {
         gameSelect();
-        scanner.close();
     }
 
     public static void gameSelect() {
         int incorrectInputCount = 0;
-        while (true) {
+        do {
+            System.out.println();
             System.out.println("Выберите игру. Угадай число - '1', Угадай слово - '2', для выхода введите - 'q'");
             String userAnswer = scanner.next();
             if (userAnswer.equals("q")) {
@@ -32,7 +33,7 @@ public class HomeWork3 {
                 }
                 System.out.print("Некорректный ввод. ");
             }
-        }
+        } while (true);
     }
 
     public static void guessNumberGame() {
@@ -68,16 +69,20 @@ public class HomeWork3 {
     public static void guessWordGame() {
         String[] words = {"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli", "carrot", "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive", "pea", "peanut", "pear", "pepper", "pineapple"};
         String answer = words[random.nextInt(words.length)];
-        System.out.println("Угадайте слово:");
+        int tryCount = 10;
+        System.out.printf("Я загадал слово из списка ниже, у вас %d попыток чтобы его угадать.%n%s%nДля возврата к выбору игры введите - quit%n", tryCount, Arrays.toString(words));
         String userAnswer = scanner.nextLine();
-        while (true) {
+        for (int i = 0; i < tryCount; i++) {
             userAnswer = scanner.nextLine();
             userAnswer = userAnswer.toLowerCase();
+            if (userAnswer.equals("quit")) {
+                break;
+            }
             if (answer.equals(userAnswer)) {
-                System.out.println("Верно.");
+                System.out.println("Поздравляю, ответ верный.");
                 break;
             } else {
-                System.out.println("Неверно.");
+                System.out.printf("Неверно. Попыток осталось: %d Ниже есть подсказка. Для возврата к выбору игры введите - quit%n", (tryCount-1-i));
                 System.out.println(helpString(answer, userAnswer));
             }
         }
@@ -85,18 +90,12 @@ public class HomeWork3 {
 
     public static StringBuilder helpString(String answer, String userAnswer) {
         StringBuilder str = new StringBuilder();
-        int maxLength = Math.min(answer.length(), userAnswer.length());
-        for (int i = 0; i < maxLength; i++) {
-            char a = answer.charAt(i);
-            char b = userAnswer.charAt(i);
-            if (a == b) {
-                str.append(b);
+        for (int i = 0; i < 15; i++) {
+            if (i < answer.length() && i < userAnswer.length() && answer.charAt(i) == userAnswer.charAt(i)) {
+                str.append(userAnswer.charAt(i));
             } else {
-                str.append("#");
+                str.append("*");
             }
-        }
-        while (str.length() < 15) {
-            str.append("#");
         }
         return str;
     }
