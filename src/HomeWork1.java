@@ -50,16 +50,14 @@ public class HomeWork1 {
     }
 
     public static void main(String[] args) {
-        byte byteMaxValue = Byte.MAX_VALUE;
-        short shortMaxValue = Short.MAX_VALUE;
-        int intMinValue = Integer.MIN_VALUE;
-        long longMaxValue = 9_223_372_036_854_775_807L;
-        float piShort = 3.14f;
-        final double pi = Math.PI;
-        char piSymbol = '\u03C0';
-        boolean flag = true;
-
-//        System.out.printf();
+//        byte byteMaxValue = Byte.MAX_VALUE;
+//        short shortMaxValue = Short.MAX_VALUE;
+//        int intMinValue = Integer.MIN_VALUE;
+//        long longMaxValue = 9_223_372_036_854_775_807L;
+//        float piShort = 3.14f;
+//        final double pi = Math.PI;
+//        char piSymbol = '\u03C0';
+//        boolean flag = true;
 
         System.out.println("Задание №3");
         double calcResult = calculation(2, 5, 6, 3);
