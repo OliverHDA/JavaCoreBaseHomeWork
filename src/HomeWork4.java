@@ -92,12 +92,12 @@ public class HomeWork4 {
         boolean stepDone = false;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (isWinPossible(DOT_X, i, j)) {
+                if (isWinPossible(DOT_O, i, j)) {
                     map[i][j] = DOT_O;
                     System.out.println("Компьютер сходил " + (j + 1) + " " + (i + 1));
                     stepDone = true;
                     break;
-                } else if (isWinPossible(DOT_O, i, j)) {
+                } else if (isWinPossible(DOT_X, i, j)) {
                     map[i][j] = DOT_O;
                     System.out.println("Компьютер сходил " + (j + 1) + " " + (i + 1));
                     stepDone = true;
