@@ -77,54 +77,14 @@ public class HomeWork4 {
     }
 
     public static void humanTurn() {
-//        int x;
-//        int y;
-//        do {
-//            System.out.println("Введите координаты в формате X Y");
-//            x = sc.nextInt() - 1;
-//            y = sc.nextInt() - 1;
-//        } while (!isSellValid(x, y));
-//        map[y][x] = DOT_X;
         int x;
         int y;
-        int dotsInLine = DOTS_TO_WIN;
-        boolean stepDone = false;
-
-        while (dotsInLine > 2) {
-            for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    if (map[0][0] == DOT_X || map[0][0] == DOT_O) {
-                    }
-                    if (isWinPossible(DOT_X, i, j, dotsInLine)) {
-                        map[i][j] = DOT_X;
-                        System.out.println("Компьютер 2 сходил " + (j + 1) + " " + (i + 1));
-                        stepDone = true;
-                        break;
-                    }
-                    if (isWinPossible(DOT_O, i, j, dotsInLine)) {
-                        map[i][j] = DOT_X;
-                        System.out.println("Компьютер 2 сходил " + (j + 1) + " " + (i + 1));
-                        stepDone = true;
-                        break;
-                    }
-                }
-                if (stepDone) {
-                    break;
-                }
-            }
-            dotsInLine--;
-            if (stepDone) {
-                break;
-            }
-        }
-        if (!stepDone) {
-            do {
-                x = rand.nextInt(SIZE);
-                y = rand.nextInt(SIZE);
-            } while (!isSellValid(x, y));
-            System.out.println("Компьютер 2 сходил рандомно " + (x + 1) + " " + (y + 1));
-            map[y][x] = DOT_X;
-        }
+        do {
+            System.out.println("Введите координаты в формате X Y");
+            x = sc.nextInt() - 1;
+            y = sc.nextInt() - 1;
+        } while (!isSellValid(x, y));
+        map[y][x] = DOT_X;
     }
 
     public static void aiTurn() {
@@ -137,13 +97,13 @@ public class HomeWork4 {
                 for (int j = 0; j < SIZE; j++) {
                     if (isWinPossible(DOT_O, i, j, dotsInLine)) {
                         map[i][j] = DOT_O;
-                        System.out.println("Компьютер 1 сходил " + (j + 1) + " " + (i + 1));
+                        System.out.println("Компьютер сделал ход " + (j + 1) + " " + (i + 1));
                         stepDone = true;
                         break;
                     }
                     if (isWinPossible(DOT_X, i, j, dotsInLine)) {
                         map[i][j] = DOT_O;
-                        System.out.println("Компьютер 1 сходил " + (j + 1) + " " + (i + 1));
+                        System.out.println("Компьютер сделал ход " + (j + 1) + " " + (i + 1));
                         stepDone = true;
                         break;
                     }
@@ -162,7 +122,7 @@ public class HomeWork4 {
                 x = rand.nextInt(SIZE);
                 y = rand.nextInt(SIZE);
             } while (!isSellValid(x, y));
-            System.out.println("Компьютер 1 сходил рандомно " + (x + 1) + " " + (y + 1));
+            System.out.println("Компьютер сделал ход " + (x + 1) + " " + (y + 1));
             map[y][x] = DOT_O;
         }
     }
@@ -171,38 +131,17 @@ public class HomeWork4 {
         char[] winLine = arrWinLine(symb, DOTS_TO_WIN);
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                char[] arr = new char[DOTS_TO_WIN];
-                if (isFreeSpaceForward(j)) {
-                    for (int k = 0; k < DOTS_TO_WIN; k++) {
-                        arr[k] = map[i][j + k];
-                    }
-                    if (Arrays.equals(arr, winLine)) {
-                        return true;
-                    }
+                if (isFreeSpaceForward(j) && checkLine(i, j, 0, 1, winLine)) {
+                    return true;
                 }
-                if (isFreeSpaceDown(i)) {
-                    for (int k = 0; k < DOTS_TO_WIN; k++) {
-                        arr[k] = map[i + k][j];
-                    }
-                    if (Arrays.equals(arr, winLine)) {
-                        return true;
-                    }
+                if (isFreeSpaceDown(i) && checkLine(i, j, 1, 0, winLine)) {
+                    return true;
                 }
-                if (isFreeSpaceDiagonal1(i, j)) {
-                    for (int k = 0; k < DOTS_TO_WIN; k++) {
-                        arr[k] = map[i + k][j + k];
-                    }
-                    if (Arrays.equals(arr, winLine)) {
-                        return true;
-                    }
+                if (isFreeSpaceDiagonal1(i, j) && checkLine(i, j, 1, 1, winLine)) {
+                    return true;
                 }
-                if (isFreeSpaceDiagonal2(i, j)) {
-                    for (int k = 0; k < DOTS_TO_WIN; k++) {
-                        arr[k] = map[i - k][j + k];
-                    }
-                    if (Arrays.equals(arr, winLine)) {
-                        return true;
-                    }
+                if (isFreeSpaceDiagonal2(i, j) && checkLine(i, j, -1, 1, winLine)) {
+                    return true;
                 }
             }
         }
@@ -267,80 +206,48 @@ public class HomeWork4 {
         return arr;
     }
 
+    public static boolean checkLine(int i, int j, int iVector, int jVector, char[] winLine) {
+        char[] line = new char[DOTS_TO_WIN];
+        for (int k = 0; k < DOTS_TO_WIN; k++) {
+            line[k] = map[i + k * iVector][j + k * jVector];
+        }
+        return Arrays.equals(line, winLine);
+    }
+
     public static boolean isAIWin(char symb, int dotsToWin) {
         char[] winLine = arrWinLine(symb, dotsToWin);
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                char[] arr = new char[dotsToWin];
-                boolean status = false;
-                if (isFreeSpaceForward(j)) {
-                    for (int k = 0; k < dotsToWin; k++) {
-                        arr[k] = map[i][j + k];
-                    }
-                    for (int k = 0; k < arr.length; k++) {
-                        if (arr[k] == 'V') {
-                            status = true;
-                            arr[k] = symb;
-                            break;
-                        }
-                    }
-                    if (status && Arrays.equals(arr, winLine)) {
-                        return true;
-                    } else {
-                        status = false;
-                    }
+                if (isFreeSpaceForward(j) && checkPossibleLine(i, j, 0, 1, winLine, symb, dotsToWin)) {
+                    return true;
                 }
-                if (isFreeSpaceDown(i)) {
-                    for (int k = 0; k < dotsToWin; k++) {
-                        arr[k] = map[i + k][j];
-                    }
-                    for (int k = 0; k < arr.length; k++) {
-                        if (arr[k] == 'V') {
-                            status = true;
-                            arr[k] = symb;
-                            break;
-                        }
-                    }
-                    if (status && Arrays.equals(arr, winLine)) {
-                        return true;
-                    } else {
-                        status = false;
-                    }
+                if (isFreeSpaceDown(i) && checkPossibleLine(i, j, 1, 0, winLine, symb, dotsToWin)) {
+                    return true;
                 }
-                if (isFreeSpaceDiagonal1(i, j)) {
-                    for (int k = 0; k < dotsToWin; k++) {
-                        arr[k] = map[i + k][j + k];
-                    }
-                    for (int k = 0; k < arr.length; k++) {
-                        if (arr[k] == 'V') {
-                            status = true;
-                            arr[k] = symb;
-                            break;
-                        }
-                    }
-                    if (status && Arrays.equals(arr, winLine)) {
-                        return true;
-                    } else {
-                        status = false;
-                    }
+                if (isFreeSpaceDiagonal1(i, j) && checkPossibleLine(i, j, 1, 1, winLine, symb, dotsToWin)) {
+                    return true;
                 }
-                if (isFreeSpaceDiagonal2(i, j)) {
-                    for (int k = 0; k < dotsToWin; k++) {
-                        arr[k] = map[i - k][j + k];
-                    }
-                    for (int k = 0; k < arr.length; k++) {
-                        if (arr[k] == 'V') {
-                            status = true;
-                            arr[k] = symb;
-                            break;
-                        }
-                    }
-                    if (status && Arrays.equals(arr, winLine)) {
-                        return true;
-                    }
+                if (isFreeSpaceDiagonal2(i, j) && checkPossibleLine(i, j, -1, 1, winLine, symb, dotsToWin)) {
+                    return true;
                 }
             }
         }
         return false;
+    }
+
+    public static boolean checkPossibleLine(int i, int j, int iVector, int jVector, char[] winLine, char symb, int dotsToWin) {
+        boolean status = false;
+        char[] line = new char[dotsToWin];
+        for (int k = 0; k < dotsToWin; k++) {
+            line[k] = map[i + k * iVector][j + k * jVector];
+        }
+        for (int k = 0; k < line.length; k++) {
+            if (line[k] == 'V') {
+                status = true;
+                line[k] = symb;
+                break;
+            }
+        }
+        return status && Arrays.equals(line, winLine);
     }
 }
