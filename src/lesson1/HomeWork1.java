@@ -1,3 +1,5 @@
+package lesson1;
+
 public class HomeWork1 {
 
     public static float calculation(float a, float b, float c, float d) {
