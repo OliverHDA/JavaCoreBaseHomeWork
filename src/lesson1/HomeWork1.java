@@ -1,3 +1,5 @@
+package lesson1;
+
 public class HomeWork1 {
 
     //    Задание 3.
